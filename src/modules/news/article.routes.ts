@@ -6,7 +6,7 @@ const router = express.Router();
 const articleController = new ArticleController();
 
 // Define routes
-router.post('/', upload.array('images', 3), checkAdminMiddleware, articleController.uploadArticle);
+router.post('/', upload.array('images', 3), articleController.uploadArticle);
 router.get('/', articleController.getArticles);
 router.get('/trending', articleController.getTrendingArticles);
 router.get('/recent', articleController.getArticlesSortedByMostRecent);

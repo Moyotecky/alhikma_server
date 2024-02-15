@@ -9,7 +9,9 @@ class Database {
 
   async connect() {
     try {
-      await mongoose.connect(this.uri);
+      await mongoose.connect(this.uri, {
+        
+      });
       console.log('Connected to MongoDB');
     } catch (error: any) {
       console.error('Error connecting to MongoDB:', error.message);
@@ -26,7 +28,8 @@ class Database {
   }
 }
 
-const mongodbUri = process.env.MONGODB_URI || '';
+// Use your environment variable or default to a Cloud MongoDB URI
+const mongodbUri = process.env.MONGODB_URI || 'mongodb+srv://admin:admin@scripting.g3kzmxs.mongodb.net/?retryWrites=true&w=majority';
 
 const database = new Database(mongodbUri);
 
