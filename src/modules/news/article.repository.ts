@@ -1,4 +1,3 @@
-import { ObjectId } from "mongoose";
 import { IArticle } from "./article.interface";
 import Article from "./article.model";
 
