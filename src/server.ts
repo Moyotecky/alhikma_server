@@ -4,6 +4,7 @@ import cors from "cors";
 import database from "./utils/database/db";
 import { config } from "dotenv";
 import CareerRouter from "./modules/career/career.routes";
+import NewsRouter from "./modules/news/article.routes";
 
 
 config();
