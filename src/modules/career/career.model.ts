@@ -6,14 +6,16 @@ const CareerSchema = new Schema({
         required: true
     },
     category: {
-        type: String
+        type: String, 
+        required: true
     },
     description: {
         type: String,
         required: true
     },
     company: {
-        type: String
+        type: String,
+        required: true
     },
     salary: {
         type: {
@@ -23,7 +25,6 @@ const CareerSchema = new Schema({
             },
             max: {
                 type: Number,
-                required: true
             },
             currency: {
                 type: String
@@ -39,6 +40,10 @@ const CareerSchema = new Schema({
         type: String,
         enum: ['published', 'draft'],
         default: 'draft'
+    },
+    isHired: {
+      type: Boolean,
+      default: false  
     },
     level: {
         type: String,

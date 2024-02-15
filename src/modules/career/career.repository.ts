@@ -1,4 +1,7 @@
+import { trusted } from "mongoose";
+import logger from "../../utils/logging/logger";
 import Career from "./career.model";
+import { ICareer } from "./career.interface";
 
 
 export default class CareerRepository {
@@ -41,10 +44,39 @@ export default class CareerRepository {
         return await Career.find({ status: 'published' });
     }
 
-    async getWithFilters(filter: object, name: string = '') {
-        if (name) {
-            filter = { ...filter, name: { $regex: name, $options: 'i' } };
-        }
-        return await Career.find(filter);
+async addCareer(career: ICareer) {
+    try {
+        const newCareer = new Career(career);
+        return await newCareer.save();
+    } catch (error) {
+        // Handle the error here
+        logger.error(error);
+        throw error;
     }
+}
+
+    async updateCareer(id: string, career: Partial<ICareer>) {
+        return await Career.findOneAndUpdate({ _id: id }, career, { new: true });
+    }
+    
+    async markAsHired(id: string) {
+        return await Career.findOneAndUpdate({ _id: id }, { isHired: true }, { new: true });
+    }
+
+    async markAsNotHired(id: string) {
+        return await Career.findOneAndUpdate({ _id: id }, { isHired: false }, { new: true });
+    }
+
+    async deleteCareer(id: string) {
+        return await Career.findOneAndDelete({ _id: id });
+    }
+
+
+    // Work on advanced name search
+    // async getWithFilters(filter: object, name: string = '') {
+    //     if (name) {
+    //         filter = { ...filter, name: { $regex: name, $options: 'i' } };
+    //     }
+    //     return await Career.find(filter);
+    // }
 }

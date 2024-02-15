@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import database from "./utils/database/db";
 import { config } from "dotenv";
+import CareerRouter from "./modules/career/career.routes";
 
 config();
 
@@ -13,6 +14,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 database.connect();
+
+app.use('/careers', CareerRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello, World!");
