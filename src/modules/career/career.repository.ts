@@ -44,21 +44,31 @@ export default class CareerRepository {
         return await Career.find({ status: 'published' });
     }
 
-async addCareer(career: ICareer) {
-    try {
-        const newCareer = new Career(career);
-        return await newCareer.save();
-    } catch (error) {
-        // Handle the error here
-        logger.error(error);
-        throw error;
+    async getCareers() {
+        return await Career.find({ status: 'published', isHired: false });
     }
-}
+
+    async addCareer(career: ICareer) {
+        try {
+            const newCareer = new Career(career);
+            return await newCareer.save();
+        } catch (error) {
+            // Handle the error here
+            logger.error(error);
+            throw error;
+        }
+    }
+
+    async getCareersWithPagination(page: number, pageSize: number) {
+        const skip = (page - 1) * pageSize;
+        const careers = await Career.find({}).skip(skip).limit(pageSize);
+        return careers;
+    }
 
     async updateCareer(id: string, career: Partial<ICareer>) {
         return await Career.findOneAndUpdate({ _id: id }, career, { new: true });
     }
-    
+
     async markAsHired(id: string) {
         return await Career.findOneAndUpdate({ _id: id }, { isHired: true }, { new: true });
     }
@@ -72,11 +82,24 @@ async addCareer(career: ICareer) {
     }
 
 
-    // Work on advanced name search
-    // async getWithFilters(filter: object, name: string = '') {
-    //     if (name) {
-    //         filter = { ...filter, name: { $regex: name, $options: 'i' } };
-    //     }
-    //     return await Career.find(filter);
-    // }
+    async getWithFilters(filters: object, searchTerm: string = '') {
+        let query = {};
+    
+        if (searchTerm) {
+            const searchTerms = searchTerm.split(' ').filter(term => term.trim() !== '');
+    
+            const searchConditions = searchTerms.map(term => ({
+                $or: [
+                    { name: { $regex: term, $options: 'i' } },
+                    { description: { $regex: term, $options: 'i' } }
+                ]
+            }));
+    
+            query = { $and: searchConditions };
+        }
+    
+        const finalQuery = { ...filters, ...query };
+    
+        return await Career.find(finalQuery);
+    }    
 }

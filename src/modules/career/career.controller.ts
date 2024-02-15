@@ -17,6 +17,50 @@ class CareerController {
         }
     }
 
+    async fetchCareers(req: Request, res: Response) {
+        try {
+            const careers = await careerService.getPublicCareers();
+            res.json(careers);
+        } catch (error) {
+            logger.error("Error in fetchCareers:", error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+
+    async markCareerAsHired(req: Request, res: Response) {
+        try {
+            const id = req.params.id;
+            const updatedCareer = await careerService.markCareerAsHired(id);
+            res.json(updatedCareer);
+        } catch (error) {
+            logger.error("Error in markCareerAsHired:", error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+
+    async getCareersWithPagination(req: Request, res: Response) {
+        try {
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 10;
+            const careers = await careerService.getCareersWithPagination(page, limit);
+            res.json(careers);
+        } catch (error) {
+            logger.error("Error in getCareersWithPagination:", error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+
+    async searchCareers(req: Request, res: Response) {
+        try {
+            const { searchTerm, location, workLocation, level } = req.query;
+            const careers = await careerService.searchCareers(searchTerm as string, location as string, workLocation as string, level as string);
+            res.json(careers);
+        } catch (error) {
+            console.error("Error in searchCareers:", error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+
     async getCareerByShortId(req: Request, res: Response) {
         try {
             const shortId = req.params.shortId;
