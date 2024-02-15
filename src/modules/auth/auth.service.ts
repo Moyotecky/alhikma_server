@@ -61,9 +61,9 @@ export default class AuthService {
         }
     }
 
-    async resetPassword(id: string, token: string, password: string) {
+    async resetPassword(email: string, token: string, password: string) {
         try {
-            const user = await authRepository.getUserById(id);
+            const user = await authRepository.getUser(email);
             if (!user) {
                 throw new Error("User not found");
             }
@@ -73,7 +73,7 @@ export default class AuthService {
             const hashedPassword = await bcrypt.hash(password, 10);
             user.password = hashedPassword;
             user.vToken = "";
-            return await authRepository.updateUser(id, user);
+            return await authRepository.updateUser(user._id, user);
         } catch (error) {
             console.error(error);
             throw error;
