@@ -29,7 +29,7 @@ class Database {
 }
 
 // Use your environment variable or default to a Cloud MongoDB URI
-const mongodbUri = process.env.MONGODB_URI || 'mongodb+srv://admin:admin@scripting.g3kzmxs.mongodb.net/?retryWrites=true&w=majority';
+const mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/alhikma';
 
 const database = new Database(mongodbUri);
 
