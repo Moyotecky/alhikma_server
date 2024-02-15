@@ -7,6 +7,9 @@ import { ICareer } from "./career.interface";
 const careerService = new CareerService();
 
 class CareerController {
+    getDrafts(arg0: string, getDrafts: any) {
+        throw new Error("Method not implemented.");
+    }
     async getAllCareers(req: Request, res: Response) {
         try {
             const careers = await careerService.getAllCareers();
