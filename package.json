@@ -29,6 +29,7 @@
     "joi": "^17.12.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.2",
+    "short-uuid": "^4.2.2",
     "uuid": "^9.0.1",
     "winston": "^3.11.0"
   }
