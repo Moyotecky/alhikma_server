@@ -5,6 +5,7 @@ const platformEmail = process.env.PLATFORM_EMAIL || "me@gmail.com"
 
 export async function sendEmail(to: string, subject: string, html: string): Promise<void> {
     try {
+      console.log(emailPass, platformEmail)
       const transporter = nodemailer.createTransport({
         service: "Gmail",
         debug: true,

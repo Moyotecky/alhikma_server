@@ -54,6 +54,7 @@ export default class AuthService {
             const token = Math.floor(100000 + Math.random() * 900000).toString().padStart(6, '0');
             user.vToken = token;
             const newUser = await authRepository.updateUser(user._id, user);
+            console.log(newUser);
             await sendForgotPasswordEmail(newUser);
         } catch (error) {
             console.error(error);

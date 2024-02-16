@@ -6,7 +6,7 @@ import cors from "cors";
 import database from "./utils/database/db";
 import CareerRouter from "./modules/career/career.routes";
 import NewsRouter from "./modules/news/article.routes";
-
+import AuthRouter from "./modules/auth/auth.routes";
 
 
 const app = express();
@@ -19,6 +19,7 @@ database.connect();
 
 app.use('/careers', CareerRouter);
 app.use('/news', NewsRouter);
+app.use('/auth', AuthRouter);
 
 
 app.get("/", (req, res) => {

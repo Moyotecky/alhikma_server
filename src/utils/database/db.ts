@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { listenerCount } from 'process';
 
 class Database {
   private readonly uri: string;
@@ -29,7 +30,12 @@ class Database {
 }
 
 // Use your environment variable or default to a Cloud MongoDB URI
-const mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/alhikma';
+let mongodbUri;
+if (process.env.NODE_ENV == "production") {
+    mongodbUri = process.env.MONGODB_URI || '';
+} else {
+    mongodbUri = 'mongodb://localhost:27017/alhikma';
+}
 
 const database = new Database(mongodbUri);
 

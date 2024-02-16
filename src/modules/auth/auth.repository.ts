@@ -19,13 +19,17 @@ export default class AuthRepository {
         }
     }
 
-    async updateUser(id: any, user: Partial<IUser>) {
-        try {
-            return await User.updateOne({ _id: id }, user);
-        } catch (error) {
-            throw error;
+async updateUser(id: any, user: Partial<IUser>) {
+    try {
+        const updatedUser = await User.findByIdAndUpdate(id, user, { new: true });
+        if (!updatedUser) {
+            throw new Error("User not found");
         }
+        return updatedUser;
+    } catch (error) {
+        throw error;
     }
+}
 
     async setVToken(id: string, token: string) {
         try {
