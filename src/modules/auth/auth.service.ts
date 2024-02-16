@@ -34,6 +34,8 @@ export default class AuthService {
             if (!isPasswordValid) {
                 throw new Error("Invalid password");
             }
+            // Check if a token already exists for the user, and if so, destroy it
+            const deleteOldToken = await authRepository.deleteRefreshTokenByUserId(user._id as any);
             const newToken = await authRepository.createRefreshToken({
                 token: jwt.sign({ user_id: user._id }, process.env.JWT_SECRET as string, { expiresIn: "30d" }),
                 user_id: user._id

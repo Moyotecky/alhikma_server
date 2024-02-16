@@ -99,7 +99,7 @@ export default class CareerRepository {
         }
     
         const finalQuery = { ...filters, ...query };
-    
+        console.log(finalQuery)
         return await Career.find(finalQuery);
     }    
 }

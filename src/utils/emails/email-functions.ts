@@ -24,7 +24,7 @@ async function sendVerificationEmail(user: any): Promise<void> {
 async function sendForgotPasswordEmail(user: any): Promise<void> {
     try {
         const token = user.vToken;
-        const jwtToken = jwt.sign({ user_id: user._id }, process.env.JWT_SECRET as string, { expiresIn: "12m" });
+        const jwtToken = jwt.sign({ user_id: user._id, email: user.email }, process.env.JWT_SECRET as string, { expiresIn: "12m" });
         const html = fs.readFileSync("./src/utils/emails/templates/forgotPassword.html", "utf8");
         const url = `${process.env.FRONTEND_URL}/auth/forgot-password/${jwtToken}`;
         const username = user.name;
