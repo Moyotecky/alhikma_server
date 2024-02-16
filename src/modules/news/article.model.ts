@@ -5,10 +5,19 @@ const ArticleSchema = new Schema({
         type: String,
         required: true
     },
-    content: {
-        type: String,
-        required: true
-    },
+    content: [
+        {
+            heading: {
+                type: String,
+                required: true
+            },
+            body: {
+                type: String,
+                required: true
+            },
+            images: [String]
+        }
+    ],
     author: {
         type: String,
         required: true
